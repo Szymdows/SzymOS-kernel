@@ -70,7 +70,7 @@ SzymOS kernel is ready. Awaiting input...
 
 ### Toolchain
 
-* `x86_64-elf-gcc` (cross compiler)
+* `x86_64-elf-gcc` (cross compiler) - which can be downloaded from https://github.com/lordmilko/i686-elf-tools/releases/tag/15.2.0 - you need to download 'x86_64-elf-tools-windows.zip'
 * GNU binutils
 * NASM / GAS (assembly support)
 * GRUB 2
