@@ -1,0 +1,73 @@
+# ===========================
+# SzymOS Kernel Build Artifacts
+# ===========================
+
+# Compiled Object Files
+*.o
+*.obj
+
+# Linked Kernel Binaries
+*.bin
+*.elf
+*.exe
+
+# Final ISO Images (Any version)
+*.iso
+*.img
+
+# Map files (Debugging symbols)
+*.map
+
+# ===========================
+# Build Directories
+# ===========================
+
+# The staging directory used by GRUB to build the ISO
+isodir/
+
+# Optional: if you decide to use a build folder later
+build/
+dist/
+out/
+
+# ===========================
+# System Files
+# ===========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# ===========================
+# IDE & Editor Configuration
+# ===========================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IntelliJ / JetBrains
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*#
+
+# ===========================
+# Logs & Temporary Files
+# ===========================
+*.log
+qemu.log
+serial.log
