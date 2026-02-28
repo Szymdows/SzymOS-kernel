@@ -4,6 +4,8 @@
 
 The project aims to provide a clean and understandable learning environment for kernel development while gradually evolving into a fully featured experimental operating system.
 
+## Please read everything inside of `docs/` for more information and for guides!
+
 ---
 
 ## ✨ Features (v0.2.0)
