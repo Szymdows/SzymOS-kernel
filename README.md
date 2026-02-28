@@ -154,7 +154,7 @@ You can help by:
 
 Please keep code readable and well-commented.
 
-- See `docs\` for instructions and `CONTRIBUTING.md` for how to contribute.
+- See `docs/` for instructions and `CONTRIBUTING.md` for how to contribute.
 
 ---
 
