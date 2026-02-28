@@ -117,7 +117,8 @@ SzymOS-Kernel/
 ├── include/     # Header files
 ├── iso/         # GRUB configuration
 ├── linker.ld    # Memory layout
-└── build.bat    # Build automation
+├── build.bat    # Build automation
+└── docs/        # SzymOS Kernel docs
 ```
 
 ---
