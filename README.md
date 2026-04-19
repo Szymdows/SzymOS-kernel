@@ -123,7 +123,7 @@ sudo pacman -S base-devel nasm grub xorriso qemu-system-x86
 ### Build and Run
 
 ```bash
-git clone https://github.com/yourusername/SzymOS-kernel.git
+git clone https://github.com/Szymdows/SzymOS-kernel.git
 cd SzymOS-kernel
 
 make clean
