@@ -40,6 +40,69 @@ This project is aimed at building a **serious low-level system** with real funct
 
 ---
 
+## 🖥️ System Demonstration
+
+### GRUB Bootloader
+![GRUB Boot](screenshots/grub-boot.png)
+
+The system is loaded via GRUB, allowing boot selection and kernel entry.
+
+---
+
+### Kernel Boot
+![Boot](screenshots/boot.png)
+
+SzymOS initializes core subsystems including memory, VGA output, and input drivers.
+
+---
+
+### First Boot
+![First Boot](screenshots/first-boot.png)
+
+Initial system state after first successful boot into the kernel shell.
+
+---
+
+### Command Interface
+![Commands](screenshots/commands.png)
+
+Interactive shell demonstrating core system commands and file operations.
+
+---
+
+### Saving Data to Disk
+![Save to Disk](screenshots/saving-to-disk-demonstration.png)
+
+Files are written to persistent storage using SzymFS.
+
+---
+
+### System Reboot
+At this stage, the system was rebooted to verify persistence.
+
+---
+
+### After Reboot
+![After Reboot](screenshots/after-reboot.png)
+
+System state after reboot, confirming that data was retained.
+
+---
+
+### Persistent Storage Demonstration
+![Persistent Storage](screenshots/persistent-storage-demonstration.png)
+
+Previously saved data is successfully reloaded from disk.
+
+---
+
+### Kernel Panic Demonstration
+![Kernel Panic](screenshots/kernel-panic-demonstration.png)
+
+This kernel panic was intentionally triggered by executing the `panic` command to demonstrate system error handling and crash state output.
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites
