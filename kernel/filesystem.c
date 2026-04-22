@@ -167,7 +167,7 @@ void fs_load_from_disk(void) {
 void fs_save_to_disk(void) {
     if (!disk_available()) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_YELLOW, VGA_COLOR_BLACK));
-        terminal_writestring("Warning: No disk selected, changes are RAM-only\n\n");
+        terminal_writestring("Warning: No disk selected, changes are RAM-only\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
         fs_persistent = 0;
         return;

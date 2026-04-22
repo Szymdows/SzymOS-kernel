@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define SZYMOS_VERSION "0.1.0"
+#define SZYMOS_VERSION "0.1.2"
 #define SZYMOS_CODENAME "Initium"
 #define SZYMOS_YEAR "2026"
 

@@ -5,6 +5,7 @@
 #include "../include/kernel.h"
 #include <stdint.h>
 #include "filesystem.h"
+#include "io.h"
 
 void disk_selector_run(void) {
     int drive_count = ata_get_drive_count();

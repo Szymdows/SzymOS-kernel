@@ -6,7 +6,9 @@
 #include "io.h"
 #include "../include/kernel.h"
 #include "filesystem.h"
-
+#include "ata.h"
+#include "serial.h"
+#include "io.h"
 #define MAX_COMMAND_LENGTH 256
 
 static char command_buffer[MAX_COMMAND_LENGTH];
@@ -60,7 +62,16 @@ void cmd_colors(void) {
     }
     terminal_writestring("\n");
 }
-
+void cmd_serial_print(const char* msg) {
+    serial_init();
+    serial_print(msg);
+}
+void cmd_serial_read() {
+    char buffer[128];
+    serial_init();
+    serial_read(buffer,128);
+    terminal_writestring(buffer);
+}
 void cmd_calc(const char* expr) {
     // Simple calculator: "calc 5 + 3"
     int num1 = 0, num2 = 0;
@@ -220,6 +231,7 @@ void shell_execute_command(const char* cmd) {
         terminal_writestring("  cat      - Display file contents (cat filename)\n");
         terminal_writestring("  write    - Create a file (write name content)\n");
         terminal_writestring("  rm       - Delete a file (rm filename)\n");
+	terminal_writestring("  disks    - List ATA drives\n");
         
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
         terminal_writestring("\nFun Commands:\n");
@@ -243,6 +255,12 @@ void shell_execute_command(const char* cmd) {
     else if (starts_with(cmd, "rm ")) {
         cmd_rm(cmd + 3);
     }
+    else if (starts_with(cmd, "serial_print ")) {
+        cmd_serial_print(cmd + 13);
+    }
+    else if (strcmp(cmd, "serial_read") == 0) {
+        cmd_serial_read();
+    } 
     else if (strcmp(cmd, "clear") == 0) {
         terminal_clear();
     }
@@ -277,6 +295,10 @@ void shell_execute_command(const char* cmd) {
     }
     else if (strcmp(cmd, "colors") == 0) {
         cmd_colors();
+    }
+    else if (strcmp(cmd, "disks") == 0) {
+        ata_detect_drives();
+        ata_print_drives();
     }
     else if (starts_with(cmd, "calc ")) {
         cmd_calc(cmd + 5);

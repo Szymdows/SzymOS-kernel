@@ -85,22 +85,26 @@ static int ata_identify(uint16_t io_base, uint8_t drive, ata_device_t* device) {
         }
     }
     
-    // Get size (words 60-61 for LBA28)
-    device->sectors = (identify[61] << 16) | identify[60];
-    device->size_mb = (device->sectors / 2048); // Convert sectors to MB
-    
-    // Check if removable (word 0, bit 7)
+    // Get sector count: prefer LBA48 (words 100-103) if supported,
+    // fall back to LBA28 (words 60-61).
+    // Words must be cast to uint32_t/uint64_t before shifting to avoid
+    // undefined behaviour on 16-bit values shifted by >= 16 bits.
+    if (identify[83] & (1 << 10)) {
+        // LBA48 supported — use 48-bit sector count (words 100-103)
+        // We cap at 32-bit (2 TB) since size_mb is uint32_t
+        uint32_t sectors_lo = ((uint32_t)identify[101] << 16) | identify[100];
+        uint32_t sectors_hi = ((uint32_t)identify[103] << 16) | identify[102];
+        device->sectors = sectors_hi ? 0xFFFFFFFFUL : sectors_lo;
+    } else {
+        // LBA28 — 28-bit sector count in words 60-61
+        device->sectors = ((uint32_t)identify[61] << 16) | identify[60];
+    }
+    device->size_mb = device->sectors / 2048; // 512-byte sectors -> MB
+
+    // Check removable media bit: word 0, bit 7 (per ATA spec).
+    // Do NOT use size as a removability heuristic — VirtualBox virtual
+    // disks can be any size and are fixed, not removable.
     device->is_removable = (identify[0] & 0x80) ? 1 : 0;
-    
-    // Check general configuration word 0 for removable media
-    if (identify[0] & 0x80) {
-        device->is_removable = 1;
-    }
-    
-    // Additional check: if size is very small, might be removable
-    if (device->size_mb < 100) {
-        device->is_removable = 1;
-    }
     
     device->present = 1;
     return 1;
