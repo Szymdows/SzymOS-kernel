@@ -53,6 +53,24 @@ void terminal_setcolor(uint8_t color) {
     terminal_color = color;
 }
 
+// Printing the Os logo
+void print_boot_art(void) {
+  terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
+  char l1[] = "   ____                       ___  ____\n";
+  char l2[] = "  / ___| _____ _ _ __ ___    / _ \\/ ___|\n";
+  char l3[] = "  \\___ \\|_  / | | '_ ` _ \\  | | | \\___ \\\n"; 
+  char l4[] = "   ___) |/ /| |_| | | | | | | |_| |___) |\n";
+  char l5[] = "  |____//___|\\__, |_| |_| |_|\\___/|____/\n"; 
+  char l6[] = "             |___/\n\n";
+
+  char *str[] = {&l1, &l2, &l3, &l4, &l5, &l6};
+  
+  for (int i = 0; i < 5; i++) {
+    terminal_writestring(str[i]);
+  }
+  return;
+}
+
 void terminal_scroll(void) {
     // Move all rows up
     for (size_t y = 0; y < VGA_HEIGHT - 1; y++) {
@@ -69,6 +87,7 @@ void terminal_scroll(void) {
     terminal_row = VGA_HEIGHT - 1;
 }
 
+// Default terminal function to display chars
 void terminal_putchar(char c) {
     if (c == '\n') {
         terminal_column = 0;

@@ -33,17 +33,17 @@ void shell_print_prompt(void) {
     terminal_writestring(":$ ");
 }
 
-void cmd_banner(void) {
-    terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-    terminal_writestring("   ____                       ___  ____\n");
-    terminal_writestring("  / ___| _____ _ _ __ ___    / _ \\/ ___|\n");
-    terminal_writestring("  \\___ \\|_  / | | '_ ` _ \\  | | | \\___ \\\n");
-    terminal_writestring("   ___) |/ /| |_| | | | | | | |_| |___) |\n");
-    terminal_writestring("  |____//___|\\__, |_| |_| |_|\\___/|____/\n");
-    terminal_writestring("             |___/\n\n");
-    terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
-    terminal_writestring("\n         The Operating System Built From Scratch!\n\n");
-}
+//void cmd_banner(void) {
+//    terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
+//    terminal_writestring("   ____                       ___  ____\n");
+//    terminal_writestring("  / ___| _____ _ _ __ ___    / _ \\/ ___|\n");
+//    terminal_writestring("  \\___ \\|_  / | | '_ ` _ \\  | | | \\___ \\\n");
+//    terminal_writestring("   ___) |/ /| |_| | | | | | | |_| |___) |\n");
+//    terminal_writestring("  |____//___|\\__, |_| |_| |_|\\___/|____/\n");
+//    terminal_writestring("             |___/\n\n");
+//    terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
+//    terminal_writestring("\n         The Operating System Built From Scratch!\n\n");
+//}
 
 void cmd_colors(void) {
     terminal_writestring("\n=== VGA Color Palette ===\n\n");
@@ -290,8 +290,8 @@ void shell_execute_command(const char* cmd) {
     else if (strcmp(cmd, "mem") == 0) {
         memory_print_info();
     }
-    else if (strcmp(cmd, "banner") == 0) {
-        cmd_banner();
+    else if (strcmp(cmd, "banner") == -1) {
+        print_boot_art();
     }
     else if (strcmp(cmd, "colors") == 0) {
         cmd_colors();

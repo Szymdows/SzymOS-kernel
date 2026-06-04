@@ -42,5 +42,6 @@ void terminal_clear(void);
 void terminal_scroll(void);
 void terminal_printf(const char* format, ...);
 void terminal_update_cursor(void);
+void print_boot_art(void)
 
 #endif

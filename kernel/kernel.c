@@ -63,17 +63,18 @@ int strncmp(const char* str1, const char* str2, size_t n) {
 }
 
 // SzymOS unique feature: Boot art
-void print_boot_art(void) {
-    terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-    terminal_writestring("   ____                       ___  ____\n");
-    terminal_writestring("  / ___| _____ _ _ __ ___    / _ \\/ ___|\n");
-    terminal_writestring("  \\___ \\|_  / | | '_ ` _ \\  | | | \\___ \\\n");
-    terminal_writestring("   ___) |/ /| |_| | | | | | | |_| |___) |\n");
-    terminal_writestring("  |____//___|\\__, |_| |_| |_|\\___/|____/\n");
-    terminal_writestring("             |___/\n\n");
-}
+//void print_boot_art(void) {
+//    terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
+//    terminal_writestring("   ____                       ___  ____\n");
+//    terminal_writestring("  / ___| _____ _ _ __ ___    / _ \\/ ___|\n");
+//    terminal_writestring("  \\___ \\|_  / | | '_ ` _ \\  | | | \\___ \\\n");
+//    terminal_writestring("   ___) |/ /| |_| | | | | | | |_| |___) |\n");
+//    terminal_writestring("  |____//___|\\__, |_| |_| |_|\\___/|____/\n");
+//    terminal_writestring("             |___/\n\n");
+//}
 
 void kernel_main(uint32_t magic, uint32_t addr) {
+    // Setting up the terminal
     terminal_initialize();
     
     print_boot_art();
