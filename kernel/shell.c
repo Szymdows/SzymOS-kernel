@@ -292,6 +292,8 @@ void shell_execute_command(const char* cmd) {
     }
     else if (strcmp(cmd, "banner") == -1) {
         print_boot_art();
+    terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
+    terminal_writestring("\n         The Operating System Built From Scratch!\n\n");
     }
     else if (strcmp(cmd, "colors") == 0) {
         cmd_colors();
