@@ -107,8 +107,17 @@ void fs_load_from_disk(void) {
     uint8_t* header_ptr = (uint8_t*)&fs_header;
     for (uint32_t i = 0; i < HEADER_SECTORS; i++) {
         if (fs_read_sector_direct(FS_START_SECTOR + i, sector_buffer) == 0) {
-            
-            memcpy(header_ptr + (i * SECTOR_SIZE), sector_buffer, SECTOR_SIZE);
+            uint32_t current_offset = i * SECTOR_SIZE;
+            uint32_t total_size = sizeof(filesystem_header_t);
+            uint32_t copy_size = SECTOR_SIZE;
+
+            if (current_offset < total_size) {
+                uint32_t remaining = total_size - current_offset;
+                if (copy_size > remaining) {
+                    copy_size = remaining;
+                }
+                memcpy(header_ptr + current_offset, sector_buffer, copy_size);
+            }
         } else {
             terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
             terminal_writestring("[ERROR] Failed to read filesystem header\n");
@@ -194,11 +203,17 @@ void fs_save_to_disk(void) {
     
     for (uint32_t i = 0; i < DATA_SECTORS; i++) {
         memset(sector_buffer, 0, SECTOR_SIZE);
+        uint32_t current_offset = i * SECTOR_SIZE;
+        uint32_t total_size = sizeof(fs_data);
         uint32_t copy_size = SECTOR_SIZE;
-        if ((i + 1) * SECTOR_SIZE > sizeof(fs_data)) {
-            copy_size = sizeof(fs_data) - (i * SECTOR_SIZE);
+
+        if (current_offset < total_size) {
+            uint32_t remaining = total_size - current_offset;
+            if (copy_size > remaining) {
+                copy_size = remaining;
+            }
         }
-        memcpy(sector_buffer, fs_data + (i * SECTOR_SIZE), copy_size);
+        memcpy(sector_buffer, fs_data + current_offset, copy_size);
         
         if (fs_write_sector_direct(FS_START_SECTOR + HEADER_SECTORS + i, sector_buffer) != 0) {
             terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
