@@ -107,8 +107,11 @@ void fs_load_from_disk(void) {
     uint8_t* header_ptr = (uint8_t*)&fs_header;
     for (uint32_t i = 0; i < HEADER_SECTORS; i++) {
         if (fs_read_sector_direct(FS_START_SECTOR + i, sector_buffer) == 0) {
-            
-            memcpy(header_ptr + (i * SECTOR_SIZE), sector_buffer, SECTOR_SIZE);
+            uint32_t copy_size = SECTOR_SIZE;
+            if ((i + 1) * SECTOR_SIZE > sizeof(filesystem_header_t)) {
+                copy_size = sizeof(filesystem_header_t) - (i * SECTOR_SIZE);
+            }
+            memcpy(header_ptr + (i * SECTOR_SIZE), sector_buffer, copy_size);
         } else {
             terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
             terminal_writestring("[ERROR] Failed to read filesystem header\n");
