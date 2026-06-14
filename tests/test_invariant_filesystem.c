@@ -38,13 +38,17 @@ START_TEST(test_header_read_no_oob_write)
 
         /* Simulate the header read loop with bounds check */
         for (size_t s = 0; s < claimed_sectors[i]; s++) {
-            size_t offset = s * SECTOR_SIZE;
-            /* The security invariant: offset + SECTOR_SIZE must not exceed buf_size */
-            if (offset + SECTOR_SIZE > buf_size) {
-                /* Must not proceed — a correct implementation stops here */
-                break;
+            uint32_t current_offset = s * SECTOR_SIZE;
+            uint32_t total_size = buf_size;
+            uint32_t copy_size = SECTOR_SIZE;
+
+            if (current_offset < total_size) {
+                uint32_t remaining = total_size - current_offset;
+                if (copy_size > remaining) {
+                    copy_size = remaining;
+                }
+                memcpy(header_buf + current_offset, sector_buffer, copy_size);
             }
-            memcpy(header_buf + offset, sector_buffer, SECTOR_SIZE);
         }
 
         /* Verify canary is intact — no out-of-bounds write occurred */
