@@ -1,5 +1,5 @@
-#ifndef VGA_H
-#define VGA_H
+#ifndef DRIVERS_VGA_H
+#define DRIVERS_VGA_H
 
 #include <libc/stdint.h>
 
@@ -29,5 +29,10 @@ void vga_putchar(char c);
 void vga_write(const char* str);
 void vga_write_color(const char* str, uint8_t fg, uint8_t bg);
 void vga_set_color(uint8_t fg, uint8_t bg);
+void vga_enable_cursor(uint8_t start, uint8_t end);
+void vga_disable_cursor(void);
+void vga_update_cursor(void);
+uint8_t vga_get_row(void);
+uint8_t vga_get_col(void);
 
-#endif
+#endif /* DRIVERS_VGA_H */

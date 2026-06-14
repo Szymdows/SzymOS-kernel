@@ -4,12 +4,16 @@
  */
 
 #include <drivers/vga.h>
+#include <arch/x86/io.h>
 #include <libc/string.h>
 #include <libc/stdint.h>
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 #define VGA_MEMORY 0xB8000
+
+#define VGA_CTRL_PORT 0x3D4
+#define VGA_DATA_PORT 0x3D5
 
 static uint16_t* vga_buffer;
 static uint8_t vga_row;
@@ -47,6 +51,36 @@ void vga_set_color(uint8_t fg, uint8_t bg) {
     vga_current_color = vga_color_code(fg, bg);
 }
 
+uint8_t vga_get_row(void) {
+    return vga_row;
+}
+
+uint8_t vga_get_col(void) {
+    return vga_col;
+}
+
+void vga_enable_cursor(uint8_t start, uint8_t end) {
+    outb(VGA_CTRL_PORT, 0x0A);
+    outb(VGA_DATA_PORT, (inb(VGA_DATA_PORT) & 0xC0) | start); // What is wrong with this!? I've done this before!
+    
+    outb(VGA_CTRL_PORT, 0x0B);
+    outb(VGA_DATA_PORT, (inb(VGA_DATA_PORT) & 0xE0) | end);
+}
+
+void vga_disable_cursor(void) {
+    outb(VGA_CTRL_PORT, 0x0A);
+    outb(VGA_DATA_PORT, 0x20);
+}
+
+void vga_update_cursor(void) {
+    uint16_t pos = vga_row * VGA_WIDTH + vga_col;
+    
+    outb(VGA_CTRL_PORT, 0x0F);
+    outb(VGA_DATA_PORT, (uint8_t)(pos & 0xFF));
+    outb(VGA_CTRL_PORT, 0x0E);
+    outb(VGA_DATA_PORT, (uint8_t)((pos >> 8) & 0xFF));
+}
+
 static void vga_scroll(void) {
     // Move all lines up by one
     for (size_t y = 0; y < VGA_HEIGHT - 1; y++) {
@@ -70,11 +104,13 @@ void vga_putchar(char c) {
         if (vga_row >= VGA_HEIGHT) {
             vga_scroll();
         }
+        vga_update_cursor();
         return;
     }
     
     if (c == '\r') {
         vga_col = 0;
+        vga_update_cursor();
         return;
     }
     
@@ -97,6 +133,8 @@ void vga_putchar(char c) {
             vga_scroll();
         }
     }
+    
+    vga_update_cursor();
 }
 
 void vga_write(const char* str) {

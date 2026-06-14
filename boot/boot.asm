@@ -32,9 +32,9 @@ start:
     push 0
     popf
 
-    ; Push multiboot info (we might use it later)
-    push ebx
-    push eax
+    ; Push multiboot info for kernel_main
+    push ebx    ; Multiboot info pointer
+    push eax    ; Multiboot magic
 
     ; Call the kernel
     call kernel_main
