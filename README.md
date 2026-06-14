@@ -19,6 +19,23 @@ This project is aimed at building a **serious low-level system** with real funct
 
 ---
 
+# Project Rewrite Notice
+
+SzymOS is currently undergoing a major rewrite on the "rewrite" branch.
+
+The rewrite focuses on:
+
+- Better project structure
+- Improved documentation
+- Cleaner code organisation
+- Improved contribution workflow
+
+The current "main" branch remains available for reference, but new development is taking place on the "rewrite" branch.
+
+Contributors are welcome to test, review, and contribute to the rewrite.
+
+---
+
 ## 🌟 Core Focus
 
 * Performance and simplicity
