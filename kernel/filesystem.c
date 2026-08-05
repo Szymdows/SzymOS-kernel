@@ -228,7 +228,7 @@ void fs_save_to_disk(void) {
     // Only show success if we got here
     if (!write_failed && fs_persistent) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_GREEN, VGA_COLOR_BLACK));
-        terminal_writestring("Filesystem saved to disk!\n\n");
+        terminal_writestring("Filesystem saved to disk!\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     }
 }
@@ -368,14 +368,14 @@ void fs_list_files(void) {
     }
     
     if (fs_header.file_count == 0) {
-        terminal_writestring("\nNo files found.\n\n");
+        terminal_writestring("No files found.\n");
         return;
     }
     
     terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-    terminal_writestring("\n=== SzymFS File List ===\n");
+    terminal_writestring("=== SzymFS File List ===\n");
     terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
-    terminal_printf("Total files: %d / %d\n\n", fs_header.file_count, MAX_FILES);
+    terminal_printf("Total files: %d / %d\n", fs_header.file_count, MAX_FILES);
     
     terminal_setcolor(vga_entry_color(VGA_COLOR_YELLOW, VGA_COLOR_BLACK));
     terminal_writestring("NAME                              SIZE\n");
@@ -397,7 +397,6 @@ void fs_list_files(void) {
             terminal_printf("  %d bytes\n", fs_header.files[i].size);
         }
     }
-    terminal_writestring("\n");
 }
 
 int fs_file_exists(const char* name) {
