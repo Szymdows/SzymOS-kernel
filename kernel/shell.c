@@ -46,7 +46,7 @@ void shell_print_prompt(void) {
 //}
 
 void cmd_colors(void) {
-    terminal_writestring("\n=== VGA Color Palette ===\n\n");
+    terminal_writestring("=== VGA Color Palette ===\n");
     
     const char* color_names[] = {
         "Black", "Blue", "Green", "Cyan", "Red", "Magenta", "Brown", "Light Gray",
@@ -60,7 +60,6 @@ void cmd_colors(void) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
         terminal_printf(" %d: %s\n", i, color_names[i]);
     }
-    terminal_writestring("\n");
 }
 void cmd_serial_print(const char* msg) {
     serial_init();
@@ -107,19 +106,19 @@ void cmd_calc(const char* expr) {
         case '*': result = num1 * num2; break;
         case '/': 
             if (num2 == 0) {
-                terminal_writestring("\nError: Division by zero!\n\n");
+                terminal_writestring("Error: Division by zero!\n");
                 return;
             }
             result = num1 / num2; 
             break;
         default:
-            terminal_writestring("\nUsage: calc <num1> <op> <num2>\n");
+            terminal_writestring("Usage: calc <num1> <op> <num2>\n");
             terminal_writestring("Operators: + - * /\n");
-            terminal_writestring("Example: calc 15 + 27\n\n");
+            terminal_writestring("Example: calc 15 + 27\n");
             return;
     }
     
-    terminal_printf("\n%d %c %d = %d\n\n", num1, op, num2, result);
+    terminal_printf("%d %c %d = %d\n", num1, op, num2, result);
 }
 
 void cmd_ls(void) {
@@ -133,12 +132,11 @@ void cmd_cat(const char* filename) {
     
     if (result < 0) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
-        terminal_printf("\nFile not found: %s\n\n", filename);
+        terminal_printf("File not found: %s\n", filename);
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     } else {
-        terminal_writestring("\n");
         terminal_writestring(buffer);
-        terminal_writestring("\n\n");
+        terminal_writestring("\n");
     }
 }
 
@@ -158,8 +156,8 @@ void cmd_write(const char* args) {
     filename[i] = '\0';
     
     if (filename[0] == '\0') {
-        terminal_writestring("\nUsage: write <filename> <content>\n");
-        terminal_writestring("Example: write hello.txt Hello World!\n\n");
+        terminal_writestring("Usage: write <filename> <content>\n");
+        terminal_writestring("Example: write hello.txt Hello World!\n");
         return;
     }
     
@@ -167,7 +165,7 @@ void cmd_write(const char* args) {
     while (*content_start == ' ') content_start++;
     
     if (*content_start == '\0') {
-        terminal_writestring("\nError: No content provided\n\n");
+        terminal_writestring("Error: No content provided\n");
         return;
     }
     
@@ -175,19 +173,19 @@ void cmd_write(const char* args) {
     
     if (result == 0) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_GREEN, VGA_COLOR_BLACK));
-        terminal_printf("\nFile created: %s\n\n", filename);
+        terminal_printf("File created: %s\n", filename);
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     } else if (result == -2) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
-        terminal_printf("\nError: File already exists: %s\n\n", filename);
+        terminal_printf("Error: File already exists: %s\n", filename);
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     } else if (result == -3) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
-        terminal_writestring("\nError: Filesystem full\n\n");
+        terminal_writestring("Error: Filesystem full\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     } else {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
-        terminal_writestring("\nError: Could not create file\n\n");
+        terminal_writestring("Error: Could not create file\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     }
 }
@@ -197,11 +195,11 @@ void cmd_rm(const char* filename) {
     
     if (result == 0) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_GREEN, VGA_COLOR_BLACK));
-        terminal_printf("\nFile deleted: %s\n\n", filename);
+        terminal_printf("File deleted: %s\n", filename);
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     } else {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
-        terminal_printf("\nFile not found: %s\n\n", filename);
+        terminal_printf("File not found: %s\n", filename);
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     }
 }
@@ -212,9 +210,9 @@ void shell_execute_command(const char* cmd) {
     }
     else if (strcmp(cmd, "help") == 0) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_YELLOW, VGA_COLOR_BLACK));
-        terminal_writestring("\nSzymOS Available Commands:\n");
+        terminal_writestring("SzymOS Available Commands:\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-        terminal_writestring("\nSystem Commands:\n");
+        terminal_writestring("System Commands:\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
         terminal_writestring("  help     - Show this help message\n");
         terminal_writestring("  clear    - Clear the screen\n");
@@ -225,7 +223,7 @@ void shell_execute_command(const char* cmd) {
         terminal_writestring("  reboot   - Reboot the system\n");
         
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-        terminal_writestring("\nFile System Commands:\n");
+        terminal_writestring("File System Commands:\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
         terminal_writestring("  ls       - List all files\n");
         terminal_writestring("  cat      - Display file contents (cat filename)\n");
@@ -234,14 +232,13 @@ void shell_execute_command(const char* cmd) {
 	terminal_writestring("  disks    - List ATA drives\n");
         
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-        terminal_writestring("\nFun Commands:\n");
+        terminal_writestring("Fun Commands:\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
         terminal_writestring("  banner   - Display SzymOS banner\n");
         terminal_writestring("  colors   - Show all VGA colors\n");
         terminal_writestring("  calc     - Simple calculator (e.g., calc 5 + 3)\n");
         terminal_writestring("  echo     - Echo text back\n");
         terminal_writestring("  panic    - Trigger a kernel panic (test)\n");
-        terminal_writestring("\n");
     }
     else if (strcmp(cmd, "ls") == 0) {
         cmd_ls();
@@ -266,7 +263,7 @@ void shell_execute_command(const char* cmd) {
     }
     else if (strcmp(cmd, "info") == 0) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-        terminal_writestring("\n=== SzymOS System Information ===\n");
+        terminal_writestring("=== SzymOS System Information ===\n");
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
         terminal_printf("Kernel Version: %s\n", SZYMOS_VERSION);
         terminal_printf("Codename: %s\n", SZYMOS_CODENAME);
@@ -274,12 +271,11 @@ void shell_execute_command(const char* cmd) {
         terminal_writestring("Bootloader: GRUB Multiboot\n");
         terminal_writestring("Terminal: VGA Text Mode (80x25)\n");
         terminal_printf("Total Memory: %d KB\n", get_total_memory());
-        terminal_writestring("\n");
     }
     else if (strcmp(cmd, "version") == 0) {
-        terminal_printf("\nSzymOS Kernel v%s (%s)\n", SZYMOS_VERSION, SZYMOS_CODENAME);
+        terminal_printf("SzymOS Kernel v%s (%s)\n", SZYMOS_VERSION, SZYMOS_CODENAME);
         terminal_writestring("A custom operating system kernel\n");
-        terminal_printf("Copyright (c) %s\n\n", SZYMOS_YEAR);
+        terminal_printf("Copyright (c) %s\n", SZYMOS_YEAR);
     }
     else if (strcmp(cmd, "save") == 0) {
         fs_save_to_disk();
@@ -305,7 +301,7 @@ void shell_execute_command(const char* cmd) {
     }
     else if (strcmp(cmd, "reboot") == 0) {
         terminal_setcolor(vga_entry_color(VGA_COLOR_YELLOW, VGA_COLOR_BLACK));
-        terminal_writestring("\nRebooting system...\n");
+        terminal_writestring("Rebooting system...\n");
         
         // Use keyboard controller to reboot
         uint8_t temp;
@@ -322,18 +318,17 @@ void shell_execute_command(const char* cmd) {
         asm volatile("hlt");
     }
     else if (starts_with(cmd, "echo ")) {
-        terminal_writestring("\n");
         terminal_writestring(cmd + 5);
-        terminal_writestring("\n\n");
+        terminal_writestring("\n");
     }
     else if (strcmp(cmd, "panic") == 0) {
         kernel_panic("User triggered panic from shell");
     }
     else {
         terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLACK));
-        terminal_printf("\nCommand not found: %s\n", cmd);
+        terminal_printf("Command not found: %s\n", cmd);
         terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
-        terminal_writestring("Type 'help' for available commands.\n\n");
+        terminal_writestring("Type 'help' for available commands.\n");
     }
 }
 
@@ -342,9 +337,9 @@ void shell_init(void) {
     command_buffer[0] = '\0';
     
     terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_GREEN, VGA_COLOR_BLACK));
-    terminal_writestring("\nWelcome to SzymOS Shell!\n");
+    terminal_writestring("Welcome to SzymOS Shell!\n");
     terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
-    terminal_writestring("Type 'help' for available commands.\n\n");
+    terminal_writestring("Type 'help' for available commands.\n");
 }
 
 void shell_run(void) {
