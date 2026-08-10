@@ -30,12 +30,12 @@ void memory_init(uint32_t multiboot_info) {
 
 void memory_print_info(void) {
     terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-    terminal_writestring("\n=== Memory Information ===\n");
+    terminal_writestring("=== Memory Information ===\n");
     terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     
     terminal_printf("Lower Memory: %d KB\n", mem_info.lower);
     terminal_printf("Upper Memory: %d KB\n", mem_info.upper);
-    terminal_printf("Total Memory: %d KB (%d MB)\n\n", 
+    terminal_printf("Total Memory: %d KB (%d MB)\n",
                     mem_info.total, mem_info.total / 1024);
 }
 

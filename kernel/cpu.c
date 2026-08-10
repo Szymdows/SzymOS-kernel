@@ -61,11 +61,11 @@ void cpu_print_info(void) {
     cpu_detect(&cpu);
     
     terminal_setcolor(vga_entry_color(VGA_COLOR_LIGHT_CYAN, VGA_COLOR_BLACK));
-    terminal_writestring("\n=== CPU Information ===\n");
+    terminal_writestring("=== CPU Information ===\n");
     terminal_setcolor(vga_entry_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK));
     
     if (!cpu.has_cpuid) {
-        terminal_writestring("CPUID not supported (pre-Pentium CPU)\n\n");
+        terminal_writestring("CPUID not supported (pre-Pentium CPU)\n");
         return;
     }
     
@@ -79,5 +79,5 @@ void cpu_print_info(void) {
     if (cpu.features & (1 << 23)) terminal_writestring("MMX ");
     if (cpu.features & (1 << 25)) terminal_writestring("SSE ");
     if (cpu.features & (1 << 26)) terminal_writestring("SSE2 ");
-    terminal_writestring("\n\n");
+    terminal_writestring("\n");
 }
